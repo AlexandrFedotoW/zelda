@@ -1,0 +1,132 @@
+[gd_scene load_steps=20 format=3 uid="uid://ctlq53uvxaoq5"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_ll32x"]
+[ext_resource type="Texture2D" uid="uid://bhg3p7fm05x5o" path="res://Game/Hero/Hero_idle.png" id="2_3c4b2"]
+[ext_resource type="Texture2D" uid="uid://r530du6n3v0w" path="res://Game/Hero/Hero_attack/H_a_1.png" id="2_psy5f"]
+[ext_resource type="Texture2D" uid="uid://drlqone8sskyt" path="res://Game/Hero/Hero_attack/H_a_2.png" id="3_3me2s"]
+[ext_resource type="Texture2D" uid="uid://d0vofignvav1f" path="res://Game/Hero/Hero_forward/H_f_1.png" id="3_oiacu"]
+[ext_resource type="Texture2D" uid="uid://nu6mmwdhdyw5" path="res://Game/Hero/Hero_attack/H_a_3.png" id="4_dniul"]
+[ext_resource type="Texture2D" uid="uid://dawwtmvjpte2w" path="res://Game/Hero/Hero_forward/H_f_2.png" id="4_rynis"]
+[ext_resource type="Texture2D" uid="uid://dur3fmec2kdb7" path="res://Game/Hero/Hero_attack/H_a_4.png" id="5_gnvuw"]
+[ext_resource type="Texture2D" uid="uid://l137tbwcrgiq" path="res://Game/Hero/Hero_forward/H_f_3.png" id="5_n6uvg"]
+[ext_resource type="Texture2D" uid="uid://opag5t6vabs3" path="res://Game/Hero/Hero_forward/H_f_4.png" id="6_7nsr1"]
+[ext_resource type="Texture2D" uid="uid://cyfmxcoujwh3q" path="res://Game/Hero/Hero_attack/H_a_5.png" id="6_e8sw4"]
+[ext_resource type="Texture2D" uid="uid://bycq7sow7ung3" path="res://Game/Hero/Hero_forward/H_f_5.png" id="7_t0mwj"]
+[ext_resource type="Texture2D" uid="uid://cok0ci83dbeqn" path="res://Game/Hero/Hero_right/H_r_1.png" id="8_evug3"]
+[ext_resource type="Texture2D" uid="uid://b8vj8yle7kxsk" path="res://Game/Hero/Hero_right/H_r_2.png" id="9_v5ibw"]
+[ext_resource type="Texture2D" uid="uid://26onwks8xyec" path="res://Game/Hero/Hero_right/H_r_3.png" id="10_ejdyo"]
+[ext_resource type="Texture2D" uid="uid://278wwh72gi1u" path="res://Game/Hero/Hero_right/H_r_4.png" id="11_53wlr"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qdtpt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_psy5f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_3me2s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dniul")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_gnvuw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_e8sw4")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_3c4b2")
+}],
+"loop": true,
+"name": &"die",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_3c4b2")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_oiacu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rynis")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_n6uvg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_7nsr1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_t0mwj")
+}],
+"loop": true,
+"name": &"run_forward",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_evug3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_v5ibw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ejdyo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_53wlr")
+}],
+"loop": true,
+"name": &"run_right",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8qrr3"]
+radius = 21.0
+height = 44.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1vcog"]
+radius = 32.0
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_ll32x")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_qdtpt")
+animation = &"attack"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 14)
+shape = SubResource("CapsuleShape2D_8qrr3")
+
+[node name="hitbox" type="Area2D" parent="."]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+position = Vector2(-1, 0)
+shape = SubResource("CircleShape2D_1vcog")
+
+[node name="healthbar" type="ProgressBar" parent="."]
+modulate = Color(0.0588235, 0.541176, 0.231373, 1)
+offset_left = -29.0
+offset_top = -56.0
+offset_right = 30.0
+offset_bottom = -40.0
+show_percentage = false
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]

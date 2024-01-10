@@ -1,0 +1,102 @@
+[gd_scene load_steps=15 format=3 uid="uid://cnt2e0jnv6kfy"]
+
+[ext_resource type="Script" path="res://enemy1.gd" id="1_5mc0e"]
+[ext_resource type="Texture2D" uid="uid://bcnsmnkkkr3n4" path="res://Game/Enemy/Enemy_1/Enemy1_dead/enemy_2_1.png" id="2_4btxk"]
+[ext_resource type="Texture2D" uid="uid://lbnf7tm8pfbp" path="res://Game/Enemy/Enemy_1/Enemy1_dead/enemy_2_2.png" id="3_kg68s"]
+[ext_resource type="Texture2D" uid="uid://ce1pk47vfn5fi" path="res://Game/Enemy/Enemy_1/Enemy1_dead/enemy_2_3.png" id="4_x20t4"]
+[ext_resource type="Texture2D" uid="uid://tgevcuhtictd" path="res://Game/Enemy/Enemy_1/Enemy1_dead/enemy_2_4.png" id="5_57m8f"]
+[ext_resource type="Texture2D" uid="uid://dt0j2r04ngy0t" path="res://Game/Enemy/Enemy_1/Enemy1_dead/enemy_2_5.png" id="6_qvwfn"]
+[ext_resource type="Texture2D" uid="uid://b47yy4k82pals" path="res://Game/Enemy/Enemy_1/Enemy1_run/enemy_1_1.png" id="7_dvd1k"]
+[ext_resource type="Texture2D" uid="uid://du0281i2qupbw" path="res://Game/Enemy/Enemy_1/Enemy1_run/enemy_1_2.png" id="8_y0nxi"]
+[ext_resource type="Texture2D" uid="uid://cb8mp5lkvkgok" path="res://Game/Enemy/Enemy_1/Enemy1_run/enemy_1_3.png" id="9_nv0w4"]
+[ext_resource type="Texture2D" uid="uid://cilttvxpdcmnw" path="res://Game/Enemy/Enemy_1/Enemy1_run/enemy_1_4.png" id="10_daflw"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hj284"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4btxk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_kg68s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_x20t4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_57m8f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_qvwfn")
+}],
+"loop": true,
+"name": &"enemy1_dead",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_dvd1k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_y0nxi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_nv0w4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_daflw")
+}],
+"loop": true,
+"name": &"enemy1_run",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8u40q"]
+radius = 13.0
+height = 66.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jg23f"]
+radius = 33.5261
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1qy01"]
+radius = 212.361
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_5mc0e")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_hj284")
+animation = &"enemy1_run"
+autoplay = "enemy1_run"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_8u40q")
+
+[node name="enemy1_hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy1_hitbox"]
+shape = SubResource("CircleShape2D_jg23f")
+
+[node name="territory" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="territory"]
+shape = SubResource("CircleShape2D_1qy01")
+
+[node name="healthbar" type="ProgressBar" parent="."]
+modulate = Color(0.0235294, 0.596078, 0.227451, 1)
+offset_left = -23.0
+offset_top = -58.0
+offset_right = 23.0
+offset_bottom = -45.0
+max_value = 50.0
+fill_mode = 1
+show_percentage = false
+
+[connection signal="body_entered" from="enemy1_hitbox" to="." method="_on_enemy_1_hitbox_body_entered"]
+[connection signal="body_exited" from="enemy1_hitbox" to="." method="_on_enemy_1_hitbox_body_exited"]
+[connection signal="body_entered" from="territory" to="." method="_on_territory_body_entered"]
+[connection signal="body_exited" from="territory" to="." method="_on_territory_body_exited"]

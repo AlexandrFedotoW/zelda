@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://c67yavm008tq6"]
+
+[ext_resource type="Texture2D" uid="uid://52lho1fjaal5" path="res://Menu/Background_menu/Background_menu.png" id="1_jnsu5"]
+[ext_resource type="Script" path="res://gameover.gd" id="1_ljuir"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_ljuir")
+
+[node name="BackgroundMenu" type="Sprite2D" parent="."]
+position = Vector2(959, 541)
+texture = ExtResource("1_jnsu5")
+
+[node name="play" type="Button" parent="."]
+offset_left = 612.0
+offset_top = 876.0
+offset_right = 913.0
+offset_bottom = 931.0
+theme_override_font_sizes/font_size = 50
+text = "Играть"
+flat = true
+
+[node name="exit" type="Button" parent="."]
+offset_left = 1239.0
+offset_top = 880.0
+offset_right = 1411.0
+offset_bottom = 957.0
+theme_override_font_sizes/font_size = 50
+text = "Выход"
+flat = true
+
+[connection signal="pressed" from="play" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="exit" to="." method="_on_button_2_pressed"]

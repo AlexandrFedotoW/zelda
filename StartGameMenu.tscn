@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://chyu60y5ubkp3"]
+
+[ext_resource type="Script" path="res://StartGame.gd" id="1_gjr23"]
+[ext_resource type="Texture2D" uid="uid://52lho1fjaal5" path="res://Menu/Background_menu/Background_menu.png" id="2_ux7em"]
+[ext_resource type="Texture2D" uid="uid://b7f7830vemmci" path="res://Menu/Button_menu/Button_menu_state_1.png" id="3_20oko"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_gjr23")
+
+[node name="BackgroundMenu" type="Sprite2D" parent="."]
+position = Vector2(962, 541)
+texture = ExtResource("2_ux7em")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 744.0
+offset_top = 785.0
+offset_right = 1344.0
+offset_bottom = 964.0
+icon = ExtResource("3_20oko")
+flat = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
