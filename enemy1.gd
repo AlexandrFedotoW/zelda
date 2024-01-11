@@ -17,8 +17,8 @@ var damage_interval = 0.5
 var damage_from_player_timer = 0.0
 var damage_from_player_interval = 0.5
 var is_attacking = false
-var min_position = Vector2(0, 0)
-var max_position = Vector2(800,430)
+var min_position = Vector2(676, 276)
+var max_position = Vector2(1703,1794)
 
 func _ready():
 	animated_sprite = $AnimatedSprite2D
@@ -81,9 +81,11 @@ func update_animation(direction, swooping=false):
 		animated_sprite.play("enemy1_run")
 	
 func pick_random_direction():
-	while last_direction == Vector2.ZERO:
-		last_direction = Vector2(randi() % 3 - 1, randi() % 3 -1)
-	last_direction = last_direction.normalized()
+	var new_direction = Vector2.ZERO
+	while new_direction == Vector2.ZERO:
+		new_direction = Vector2(randi() % 3 - 1, randi() % 3 -1)
+	new_direction = new_direction.normalized()
+	last_direction = new_direction
 
 func update_health():
 	var healthbar = $healthbar
